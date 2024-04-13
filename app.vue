@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-default-bg h-dvh">
-    <AppHeader></AppHeader>
+  <div class="h-dvh">
+    <app-header></app-header>
     <NuxtPage />
   </div>
 </template>
