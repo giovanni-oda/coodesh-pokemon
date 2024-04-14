@@ -4,16 +4,16 @@
 
 @layer components {
   .pk-card {
-    @apply flex flex-col justify-between bg-white p-3 mb-6 sm:mb-5 w-full rounded-lg shadow-[0px_4px_20px_-5px_#E1E1E1] mx-auto;
+    @apply flex flex-col bg-white p-3 mb-6 sm:mb-5 w-full rounded-lg shadow-[0px_4px_20px_-5px_#E1E1E1] mx-auto;
   }
   .pk-card-img {
-    @apply flex justify-center mt-2;
+    @apply flex justify-center mb-3;
   }
   .pk-card-content {
     @apply flex flex-col items-center font-bold;
   }
   .pk-card-footer {
-    @apply flex justify-center;
+    @apply flex justify-center mt-auto;
   }
   .pk-chip {
     @apply text-[8px] text-white px-3 py-1 mx-1 bg-slate-400 rounded-full;

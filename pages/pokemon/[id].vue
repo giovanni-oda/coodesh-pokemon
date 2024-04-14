@@ -1,40 +1,38 @@
 <script setup lang="ts">
 // imports
-import { ref } from 'vue'
+import { usePokemonStore } from '@/stores/pokemon'
 
 // macros
 const route = useRoute()
 
 // consts
-const id = ref('123')
+const id = route.params.id
+const pokemonStore = usePokemonStore()
 
-// state
-const pokemon = {
-  id: 4,
-  name: 'Charmander',
-  photoUrl: 'https://placehold.co/185x110',
-  types: ['FIRE']
-}
-const skills = [
-  'Verringert allen von Teampartnern Erlitten Schaden a 75%.',
-  'Decreases all direct damage taken by friendly Pokémon to 0.75×',
-  'Ein Pokémon mit dieser Fähigkeit kann nicht paralysiert werden',
-  'Verringert allen von Teampartnern Erlitten Schaden a 75%.'
-]
+// computed
+const pokemon = computed(() => pokemonStore.pokemon)
 </script>
 
 <template>
   <div class="container mx-auto mt-8 py-4 max-w-[860px]">
     <pokemon-card :isLarge="true" class="mb-6">
       <template #image>
-        <img :src="pokemon.photoUrl" :alt="`Pokemon ${pokemon.name} image`" />
+        <img
+          :src="pokemon?.photoUrl"
+          :alt="`Pokemon ${pokemon?.name} image`"
+          class="h-[96px] mt-2"
+        />
       </template>
       <template #default>
-        <span class="font-bold">Charmander</span>
+        <span class="font-bold">{{
+          pokemon && pokemon.name
+            ? pokemon?.name.charAt(0).toUpperCase() + pokemon?.name.slice(1)
+            : ''
+        }}</span>
       </template>
       <template #footer>
         <pokemon-chip
-          v-for="(pkType, index) in pokemon.types"
+          v-for="(pkType, index) in pokemon?.types"
           :key="index"
           :type="pkType"
         >
@@ -46,13 +44,13 @@ const skills = [
       <section>
         <span class="font-bold">Habilidades</span>
       </section>
-      <section class="p-4 font-normal w-full">
+      <section class="px-2 py-4 text-xs font-normal w-full">
         <div
-          v-for="(skill, index) in skills"
+          v-for="(skill, index) in pokemon?.abilities"
           :key="index"
-          class="py-3 border-t"
+          class="p-3 border-t"
         >
-          <span>{{ skill }}</span>
+          <span class="text-[#616161]">{{ skill }}</span>
         </div>
       </section>
     </pokemon-card>

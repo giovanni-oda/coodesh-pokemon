@@ -11,8 +11,11 @@ const pokemons = computed(() => pokemonStore.pokemons)
 
 // methods
 function handleCardClick(id: number) {
-  // console.log('id', id)
-  router.push(`/pokemon/${id}`)
+  const selectedPokemon = pokemons.value.find((pokemon) => pokemon.id === id)
+  if (selectedPokemon) {
+    pokemonStore.pokemon = selectedPokemon
+    router.push(`/pokemon/${id}`)
+  }
 }
 </script>
 
@@ -25,11 +28,19 @@ function handleCardClick(id: number) {
       class="cursor-pointer"
     >
       <template #image>
-        <img :src="pokemon.photoUrl" :alt="`Pokemon ${pokemon.name} image`" />
+        <img
+          :src="pokemon.photoUrl"
+          :alt="`Pokemon ${pokemon.name} image`"
+          class="h-[48px]"
+        />
       </template>
       <template #default>
-        <span class="text-center">{{ pokemon.name }}</span>
-        <span class="text-[9px] mt-3">Cod. {{ pokemon.id }}</span>
+        <span class="text-center">{{
+          pokemon && pokemon.name
+            ? pokemon?.name.charAt(0).toUpperCase() + pokemon?.name.slice(1)
+            : ''
+        }}</span>
+        <span class="text-[9px] mt-2">Cod. {{ pokemon.id }}</span>
       </template>
       <template #footer>
         <pokemon-chip

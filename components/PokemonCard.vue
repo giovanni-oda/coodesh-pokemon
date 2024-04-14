@@ -13,7 +13,10 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <div
     class="pk-card"
-    :class="{ 'card-detail': props.isLarge, 'card-default': !props.isLarge }"
+    :class="{
+      'card-detail': props.isLarge,
+      'card-default': !props.isLarge
+    }"
   >
     <div v-if="hasImage" class="pk-card-img">
       <slot name="image"></slot>
