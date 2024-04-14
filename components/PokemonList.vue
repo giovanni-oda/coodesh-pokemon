@@ -8,21 +8,27 @@ const router = useRouter()
 
 // computed
 const pokemons = computed(() => pokemonStore.pokemons)
+const filteredPokemons = computed(() =>
+  pokemonStore.searchResult ? pokemonStore.searchResult : pokemonStore.pokemons
+)
 
 // methods
 function handleCardClick(id: number) {
   const selectedPokemon = pokemons.value.find((pokemon) => pokemon.id === id)
   if (selectedPokemon) {
     pokemonStore.pokemon = selectedPokemon
-    router.push(`/pokemon/${id}`)
+  } else {
+    pokemonStore.pokemon = null
   }
+  pokemonStore.searchResult = null
+  router.push(`/pokemon/${id}`)
 }
 </script>
 
 <template>
   <div class="mt-8 grid grid-cols-2 sm:grid-cols-5 sm:gap-4">
     <pokemon-card
-      v-for="(pokemon, index) in pokemons"
+      v-for="(pokemon, index) in filteredPokemons"
       :key="`${index}-${pokemon.id}`"
       @click="handleCardClick(pokemon.id)"
       class="cursor-pointer"

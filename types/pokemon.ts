@@ -1,7 +1,8 @@
 interface IState {
-  pokemon: IPokemon | null
+  pokemon: IPokemon | null | undefined
   pokemons: IPokemon[]
   paginate: IPaginate | null
+  searchResult: IPokemon[] | null
 }
 
 interface IPaginate {
@@ -17,6 +18,7 @@ interface IPokemon {
   photoUrl: string
   types: Array<string>
   abilities: Array<string>
+  effects: Array<string>
 }
 
 export type { IState, IPaginate, IPokemon }

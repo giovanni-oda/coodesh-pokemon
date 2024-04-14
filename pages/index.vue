@@ -30,6 +30,21 @@ onMounted(async () => {
       <app-loader></app-loader>
     </div>
     <div v-else>
+      <app-alert-box
+        v-if="
+          pokemonStore.searchResult && pokemonStore.searchResult.length <= 0
+        "
+      >
+        <p>Nenhum resultado encontrado!</p>
+      </app-alert-box>
+      <!-- <div
+        v-if="
+          pokemonStore.searchResult && pokemonStore.searchResult.length <= 0
+        "
+        class="flex justify-center font-bold bg-white p-8 border rounded-lg mt-8"
+      >
+        <p>Nenhum resultado encontrado!</p>
+      </div> -->
       <pokemon-list></pokemon-list>
     </div>
   </div>

@@ -6,7 +6,8 @@ export const usePokemonStore = defineStore('pokemon', {
     return {
       pokemon: null,
       pokemons: [],
-      paginate: null
+      paginate: null,
+      searchResult: null
     }
   },
   getters: {
@@ -14,10 +15,10 @@ export const usePokemonStore = defineStore('pokemon', {
   },
   actions: {
     async getPokemons() {
+      const mainStore = useMainStore()
       try {
-        const mainStore = useMainStore()
-
         mainStore.loading = true
+
         const resp: any = await $fetch('/api/pokemon')
         // console.log('resp', resp)
         if (resp?.results?.length > 0) {
@@ -43,29 +44,83 @@ export const usePokemonStore = defineStore('pokemon', {
             if (allResp.length > 0) {
               // console.log('allResp', allResp)
               allResp.forEach((pokemon) => {
-                // console.log('pokemon', pokemon)
-                const newPokemon: IPokemon = {
-                  id: pokemon.id,
-                  name: pokemon.name,
-                  photoUrl:
-                    pokemon.sprites.other['official-artwork'].front_default,
-                  types: pokemon.types.map((obj: any) =>
-                    obj.type.name.toUpperCase()
-                  ),
-                  abilities: pokemon.abilities.map(
-                    (obj: any) =>
-                      obj.ability.name.charAt(0).toUpperCase() +
-                      obj.ability.name.slice(1)
-                  )
-                }
-                this.pokemons.push(newPokemon)
-                // console.log('newPokemon', newPokemon)
+                this.pokemons.push(normalizePokemonData(pokemon))
               })
             }
           }
         }
         mainStore.loading = false
       } catch (err) {
+        mainStore.loading = false
+        console.error(err)
+        return err
+      }
+    },
+
+    async getPokemonAbilities(pokemon: IPokemon) {
+      const mainStore = useMainStore()
+      try {
+        mainStore.loading = true
+
+        const arrPromisses: any[] = []
+        if (pokemon.abilities.length > 0) {
+          pokemon.abilities.forEach((ability: string) => {
+            const resp = $fetch(`/api/ability/${ability.toLowerCase()}`)
+            arrPromisses.push(resp)
+          })
+        }
+        const allResp = await Promise.all(arrPromisses)
+        // console.log('allResp', allResp)
+        const arrEffects: string[] = []
+        allResp.forEach((effect: any) => {
+          const effectEn = effect.effect_entries.find(
+            (entry: any) => entry.language.name === 'en'
+          )
+          // console.log('effectEn', effectEn)
+          const shortEffect = effectEn.short_effect
+          arrEffects.push(shortEffect)
+        })
+        // console.log('arrEffects', arrEffects)
+        if (this.pokemon) this.pokemon.effects = arrEffects
+        mainStore.loading = false
+      } catch (err) {
+        mainStore.loading = false
+        console.error(err)
+        return err
+      }
+    },
+
+    async getPokemon(id: number) {
+      const mainStore = useMainStore()
+      try {
+        mainStore.loading = true
+
+        const resp = await $fetch(`/api/pokemon/${id}`)
+        // console.log('resp', resp)
+        this.pokemon = normalizePokemonData(resp)
+        mainStore.loading = false
+      } catch (err) {
+        this.pokemon = undefined
+        mainStore.loading = false
+        console.error(err)
+        return err
+      }
+    },
+
+    async searchPokemon(searchTerm: string | number) {
+      const mainStore = useMainStore()
+      const search = searchTerm + ''
+      try {
+        mainStore.loading = true
+
+        const resp = await $fetch(`/api/pokemon/${search.toLowerCase()}`)
+        // console.log('resp', resp)
+        this.searchResult = [normalizePokemonData(resp)]
+        mainStore.loading = false
+      } catch (err) {
+        this.searchResult = []
+        mainStore.loading = false
+        console.error(err)
         return err
       }
     }
@@ -77,4 +132,19 @@ function getId(url: string) {
   const secondLastBar = urlWihoutBar.lastIndexOf('/')
   const id = urlWihoutBar.slice(secondLastBar + 1)
   return id
+}
+
+function normalizePokemonData(originalObj: any) {
+  const newPokemon: IPokemon = {
+    id: originalObj.id,
+    name: originalObj.name,
+    photoUrl: originalObj.sprites.other['official-artwork'].front_default,
+    types: originalObj.types.map((obj: any) => obj.type.name.toUpperCase()),
+    abilities: originalObj.abilities.map(
+      (obj: any) =>
+        obj.ability.name.charAt(0).toUpperCase() + obj.ability.name.slice(1)
+    ),
+    effects: []
+  }
+  return newPokemon
 }
