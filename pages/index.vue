@@ -2,21 +2,37 @@
 // imports
 import { useMainStore } from '@/stores/main'
 import { usePokemonStore } from '@/stores/pokemon'
+import { ref } from 'vue'
 
 // consts
 const mainStore = useMainStore()
 const pokemonStore = usePokemonStore()
+const scrollAnchor = ref()
 
 // computed
 const loading = computed(() => mainStore.loading)
 const pokemons = computed(() => pokemonStore.pokemons)
 
+// methods
+async function getMorePokemons() {
+  if (loading.value === false) {
+    await pokemonStore.getPokemons()
+  }
+}
+
 // hooks
 onMounted(async () => {
   if (pokemons.value.length <= 0) {
     await pokemonStore.getPokemons()
-    // console.log('fetch pokemons')
   }
+  const observer = new IntersectionObserver((entries) => {
+    let entry = entries[0]
+    if (entry.isIntersecting) {
+      // console.log('load more')
+      getMorePokemons()
+    }
+  })
+  observer.observe(scrollAnchor.value)
 })
 </script>
 
@@ -26,10 +42,7 @@ onMounted(async () => {
     <div class="mt-14 hidden sm:block">
       <h3 class="font-bold">Pokémons</h3>
     </div>
-    <div v-if="loading" class="flex justify-center mt-8">
-      <app-loader></app-loader>
-    </div>
-    <div v-else>
+    <div v-if="pokemons.length > 0">
       <app-alert-box
         v-if="
           pokemonStore.searchResult && pokemonStore.searchResult.length <= 0
@@ -37,15 +50,13 @@ onMounted(async () => {
       >
         <p>Nenhum resultado encontrado!</p>
       </app-alert-box>
-      <!-- <div
-        v-if="
-          pokemonStore.searchResult && pokemonStore.searchResult.length <= 0
-        "
-        class="flex justify-center font-bold bg-white p-8 border rounded-lg mt-8"
-      >
-        <p>Nenhum resultado encontrado!</p>
-      </div> -->
       <pokemon-list></pokemon-list>
+    </div>
+    <div v-if="loading" class="flex justify-center mt-8">
+      <app-loader></app-loader>
+    </div>
+    <div class="flex justify-center my-8">
+      <div ref="scrollAnchor"></div>
     </div>
   </div>
 </template>

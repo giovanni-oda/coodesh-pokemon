@@ -10,16 +10,27 @@ export const usePokemonStore = defineStore('pokemon', {
       searchResult: null
     }
   },
+
   getters: {
     //
   },
+
   actions: {
     async getPokemons() {
       const mainStore = useMainStore()
       try {
         mainStore.loading = true
 
-        const resp: any = await $fetch('/api/pokemon')
+        let resp: any = null
+        if (!this.paginate?.next) {
+          resp = await $fetch('/api/pokemon')
+        } else {
+          const nextUrl = this.paginate.next
+          resp = await $fetch(
+            '/api/pokemon' + nextUrl.substring(nextUrl.indexOf('?'))
+          )
+        }
+        // const resp: any = await $fetch('/api/pokemon')
         // console.log('resp', resp)
         if (resp?.results?.length > 0) {
           const newPaginate: IPaginate = {
