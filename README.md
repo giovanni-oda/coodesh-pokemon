@@ -10,12 +10,12 @@ Durante o desenvolvimento, foi dada especial atenção à documentação do proc
 
 ### Live Link
 
-Clique aqui no [link de acesso](https://coodesh-pokemon.web.app/) para testar o app online.
+Clique aqui no [link de acesso](https://coodesh-pokemon.web.app/) para visualizar / testar o app online.
 
-## Tecnologias usadas (stack)
+## Tecnologias utilizadas (stack)
 
 - Nuxt Js 3 (universal rendering)
-- Vue Js (composite APi)
+- Vue Js 3 (composite APi)
 - Typescript
 - Pinia
 - Tailwind
@@ -31,14 +31,8 @@ Como instalar e utilizar o projeto.
 # npm
 npm install
 
-# pnpm
-pnpm install
-
 # yarn
 yarn install
-
-# bun
-bun install
 ```
 
 ### Iniciar Servidor Local
@@ -49,14 +43,8 @@ O servidor de desenvolvimento irá iniciar em `http://localhost:3000`:
 # npm
 npm run dev
 
-# pnpm
-pnpm run dev
-
 # yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
 ### Produção
@@ -67,14 +55,8 @@ Build da aplicação para produção:
 # npm
 npm run build
 
-# pnpm
-pnpm run build
-
 # yarn
 yarn build
-
-# bun
-bun run build
 ```
 
 Previsualização local da build em produção:
@@ -83,19 +65,12 @@ Previsualização local da build em produção:
 # npm
 npm run preview
 
-# pnpm
-pnpm run preview
-
 # yarn
 yarn preview
-
-# bun
-bun run preview
 ```
 
 ## Dúvidas / Contato
 
-**Desenvolvido por**: Giovanni Oda
-**Contato**: [contact@giovannioda.dev](mailto:contact@giovannioda.dev)
+**Desenvolvido por**: Giovanni Oda - **Contato**: [contact@giovannioda.dev](mailto:contact@giovannioda.dev)
 
 > This is a challenge by [Coodesh](https://coodesh.com/)
