@@ -1,10 +1,31 @@
-# Nuxt 3 Minimal Starter
+# Coodesh Pokemon
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Introdução
 
-## Setup
+O projeto em questão é uma aplicação web interativa e dinâmica, desenvolvida com as tecnologias de ponta Nuxt.js, Vue 3, Pinia, Tailwind CSS e TypeScript. A aplicação foi construída para ser totalmente responsiva, garantindo uma experiência de usuário consistente em dispositivos de diferentes tamanhos e resoluções. O design segue fielmente o protótipo fornecido no Figma, respeitando cada detalhe do design system estabelecido.
 
-Make sure to install the dependencies:
+A aplicação permite aos usuários navegar por uma lista de Pokémons, implementada com uma paginação infinita que exibe 20 registros por vez, proporcionando uma experiência de usuário suave e contínua. Conta com funcionalidade de pesquisa, permitindo aos usuários encontrar Pokémons específicos por ID ou nome. Além disso, ao selecionar um card de Pokémon, a aplicação apresenta uma visão detalhada, revelando informações e efeitos associados a esse Pokémon.
+
+Durante o desenvolvimento, foi dada especial atenção à documentação do processo, através dos commits detalhados do Git e no repositório do projeto. Isto serve como um registro abrangente das decisões de design e desenvolvimento. O resultado é uma aplicação web que não só atende aos requisitos técnicos, mas também proporciona uma experiência envolvente e informativa para os entusiastas de Pokémon.
+
+### Live Link
+
+Clique aqui no [link de acesso](https://coodesh-pokemon.web.app/) para testar o app online.
+
+## Tecnologias usadas (stack)
+
+- Nuxt Js 3 (universal rendering)
+- Vue Js (composite APi)
+- Typescript
+- Pinia
+- Tailwind
+- Firebase (only hosting)
+
+## Instruções
+
+Como instalar e utilizar o projeto.
+
+### Instalação das dependências
 
 ```bash
 # npm
@@ -20,9 +41,9 @@ yarn install
 bun install
 ```
 
-## Development Server
+### Iniciar Servidor Local
 
-Start the development server on `http://localhost:3000`:
+O servidor de desenvolvimento irá iniciar em `http://localhost:3000`:
 
 ```bash
 # npm
@@ -38,9 +59,9 @@ yarn dev
 bun run dev
 ```
 
-## Production
+### Produção
 
-Build the application for production:
+Build da aplicação para produção:
 
 ```bash
 # npm
@@ -56,7 +77,7 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+Previsualização local da build em produção:
 
 ```bash
 # npm
@@ -72,4 +93,9 @@ yarn preview
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Dúvidas / Contato
+
+**Desenvolvido por**: Giovanni Oda
+**Contato**: [contact@giovannioda.dev](mailto:contact@giovannioda.dev)
+
+> This is a challenge by [Coodesh](https://coodesh.com/)
